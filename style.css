@@ -157,7 +157,7 @@ body {
     z-index: 9;
     opacity: 0.8;
     display: flex;
-    gap: 1.2rem;
+    gap: 0.9rem;
 }
 
 .arrow-down{
@@ -178,8 +178,8 @@ body {
 }
 
 .logo svg{
-    width: 75rem;
-    height: 75rem;
+    width: 80rem;
+    height: 80rem;
 
 }
 
@@ -189,7 +189,7 @@ body {
     left: 4rem;
     z-index: 9;
     display: flex;
-    gap: 1.2rem;
+    gap: 0.9rem;
 }
 
 .in-first{
@@ -241,10 +241,63 @@ body {
 
 .second{
     background: var(--bg);
-    height: 100vh;
+    height: 95rem;
     width: 100vw;
     overflow: hidden;
+    z-index: 100;
+    opacity: 1;
 }
+
+.boring-texts{
+    height: 45rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    background: var(--bg);
+}
+
+.boring-text{
+    position: absolute;
+    right: 4rem;
+}
+
+.boring-text p{
+    width: 25rem;
+    text-align: justify;
+}
+
+.turn-dark{
+    opacity: 0;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    pointer-events: none;
+    z-index: 9;
+    background: #1b1b1b;
+}
+
+.fade-in{
+    opacity: 1;
+
+    animation: fadeIn 0s ease forwards;
+  }
+  
+  
+  @keyframes fadeIn {
+    0% {
+        opacity: 1;
+    
+    }
+
+  
+    100% {
+        opacity: 1;
+        transform: translateY(0px);
+    }
+  }
+  
 
 .mini{
     position: absolute;
@@ -290,5 +343,59 @@ svg path {
     fill-opacity: 0;
     stroke-linecap: round;
     stroke-linejoin: round; 
+}
+
+.spacer{
+    height: 13rem;
+    background: var(--bg);
+}
+
+.featured-header{
+    height: 45rem;
+    width: 100%;
+    font-size: 12rem;
+    display: flex;
+    align-items: center;
+}
+
+.featured{
+    position: absolute;
+    left: 8rem;
+}
+
+.featured span{
+    font-family: 'serif';
+    font-size: 15.5rem;
+}
+
+.show-clothes{
+    height: 100%;
+    width: calc(100vw - 8rem);
+    margin-left: 4rem;
+    display: flex;
+    gap: 3rem;
+}
+
+.s-c{
+    height: 100%;
+    width: calc((100% / 3) - 1.5rem );
+    background: #cfcfcf;
+}
+
+.parallaxy{
+    height: 120rem;
+    width: calc(100vw - 8rem);
+    margin-left: 4rem;
+    overflow: hidden;
+    position: relative;
+    filter: grayscale();
+    background: #1b1b1b;
+}
+
+.parallaxy img{
+    height: 118%;
+    position: absolute;
+    top: -18%;
+    opacity: 0.8;
 }
 

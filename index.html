@@ -7,13 +7,14 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
 <div class="first">
 
-
+<div class="turn-dark"></div>
 
 <div class="nav">
     <div class="shop">
-        <p>Shop</p>
+        <p>Shop,</p>
     </div>
 
     <div class="cart">
@@ -50,7 +51,40 @@
         
     </div>
 
-    <div class="second"></div>
+
+
+
+
+
+    <div class="second fade-in">
+        <div class="featured-header">
+            <div class="featured">
+                <p><span>f</span>eatured;</p>
+            </div>
+        </div>
+
+        <div class="show-clothes">
+            <div class="s-c"></div>
+            <div class="s-c"></div>
+            <div class="s-c"></div>
+        </div>
+    </div>
+
+
+
+
+
+    <div class="boring-texts fade-in">
+        <div class="boring-text">
+            <p>Zestique, the kinda brand for young people, made by fashion niggas. We're all about bold designs, loud ideas, and a whole lot of creative chaos. It’s less about following trends and more about setting vibes. We keep it real, we keep it fresh — but let's be honest, we all know you ain't reading allat. You're here for the feels, not the spiel.</p>
+        </div>
+        
+        
+    </div>
+
+    <div class="parallaxy">
+        <img src="assets/images/landing/second.jpg" alt="">
+    </div>
 
     <div class="bottom">
         <div class="logo">
@@ -72,7 +106,7 @@
 
         <div class="copy-bottom">
             <div class="shop">
-                <p>Shop</p>
+                <p>Shop,</p>
             </div>
         
             <div class="cart">
@@ -241,31 +275,102 @@
 </script>
 
 <script>
-    const paths = document.querySelectorAll('svg path');
+    gsap.registerPlugin(ScrollTrigger);
 
-    paths.forEach((path, index) => {
-        const length = path.getTotalLength();
-        path.style.strokeDasharray = length;
-        path.style.strokeDashoffset = length;
+const paths = document.querySelectorAll('svg path');
 
-        // Animate the stroke
-        gsap.to(path, {
-            strokeDashoffset: 0,
-            duration: 3, // Duration of the stroke animation
-            delay: index * 0.2, // Staggered delay for each path
-            ease: "Expo.out", // Smooth easing
-            onComplete: () => {
-                // Animate the fill after the stroke is drawn
-                gsap.to(path, {
-                    delay: 1,
-                    fillOpacity: 1,
-                    duration: 0.5, // Duration of the fill animation
-                    ease: "power2.out",
-                });
-            },
-        });
+paths.forEach((path, index) => {
+    const length = path.getTotalLength();
+    path.style.strokeDasharray = length;
+    path.style.strokeDashoffset = length;
+
+    // Scroll-triggered animation
+    gsap.to(path, {
+        strokeDashoffset: 0,
+        duration: 3,
+        delay: index * 0.2,
+        ease: "Expo.out",
+        scrollTrigger: {
+            trigger: ".bottom",
+            start: "top 50%",
+            once: true, // Animation happens once when triggered
+        },
+        onComplete: () => {
+            gsap.to(path, {
+                fillOpacity: 1,
+                duration: 0.5,
+                ease: "power2.out",
+            });
+        }
     });
+});
+
 </script>
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+gsap.to( ".first img", {
+    yPercent: 190,
+    ease: "none",
+    scrollTrigger: {
+        trigger: ".in-first",
+        start: "bottom bottom",
+        end: "+=10000",
+        scrub: true,
+    }
+});
+</script>
+
+<script>
+    gsap.registerPlugin(ScrollTrigger);
+
+
+document.querySelectorAll('.parallaxy').forEach((img, index) => {
+
+gsap.to(img.querySelector("img"), {
+    yPercent: 230,
+    ease: "none",
+    scrollTrigger: {
+    trigger: img,
+    start: "top bottom",
+    end: "+=10000",
+    scrub: true,
+    }
+});
+});
+
+</script>
+
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+gsap.to(".first", {
+  yPercent: 230,
+  ease: "none",
+  scrollTrigger: {
+    trigger: ".in-first",
+    start: "bottom bottom",
+    end: "+=10000",
+    scrub: true,
+  }
+});
+
+gsap.to(".turn-dark", {
+  opacity: 0.4,
+  ease: "none",
+  scrollTrigger: {
+    trigger: ".in-first",
+    start: "bottom bottom",
+    end: "bottom top",
+    scrub: true,
+  }
+});
+
+</script>
+
+
+
     
+
 </body>
 </html>
