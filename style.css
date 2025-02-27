@@ -248,6 +248,8 @@ body {
     opacity: 1;
 }
 
+
+
 .boring-texts{
     height: 45rem;
     display: flex;
@@ -356,6 +358,7 @@ svg path {
     font-size: 12rem;
     display: flex;
     align-items: center;
+    position: relative;
 }
 
 .featured{
@@ -393,9 +396,9 @@ svg path {
 }
 
 .parallaxy img{
-    height: 118%;
+    height: 128%;
     position: absolute;
-    top: -18%;
+    top: -28%;
     opacity: 0.8;
 }
 
