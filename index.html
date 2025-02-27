@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name = "apple-mobile-web-app-status-bar-style" content = "#e0e0e0">
+    <meta content='#e0e0e0' name='theme-color'/> 
     <title>Zestique － Home</title>
     <link rel="stylesheet" href="style.css">
 </head>
@@ -70,7 +72,7 @@
         <div class="show-clothes fade-in">
             <div class="s-c">
                 <div class="c-i">
-                    <img src="assets/images/clothes/test-default.png" alt="" srcset="">
+                    <img draggable="false" src="assets/images/clothes/test-default.png" alt="" srcset="">
                 </div>
                 <div class="d-c">
                     <div class="item-name">
@@ -85,7 +87,7 @@
 
             <div class="s-c">
                 <div class="c-i">
-                    <img src="assets/images/clothes/test-default.png" alt="" srcset="">
+                    <img draggable="false" src="assets/images/clothes/test-default.png" alt="" srcset="">
                 </div>
                 <div class="d-c">
                     <div class="item-name">
@@ -100,7 +102,7 @@
 
             <div class="s-c">
                 <div class="c-i">
-                    <img src="assets/images/clothes/test-default.png" alt="" srcset="">
+                    <img draggable="false" src="assets/images/clothes/test-default.png" alt="" srcset="">
                 </div>
                 <div class="d-c">
                     <div class="item-name">
@@ -121,7 +123,7 @@
 
     <div class="boring-texts fade-in">
         <div class="boring-text">
-            <p>Zestique, the kinda brand for young people, made by fashion niggas. We're all about bold designs, loud ideas, and a whole lot of creative chaos. It’s less about following trends and more about setting vibes. We keep it real, we keep it fresh — but let's be honest, we all know you ain't reading allat. You're here for the feels, not the spiel.</p>
+            <p>This isn’t just streetwear. It’s a statement. Built for those who don’t just wear fashion but redefine it. For the young, the bold, the ones who turn sidewalks into runways and dreams into legacies.</p>
         </div>
         
         
@@ -329,7 +331,7 @@ paths.forEach((path, index) => {
     path.style.strokeDasharray = length;
     path.style.strokeDashoffset = length;
 
-    // Scroll-triggered animation
+
     gsap.to(path, {
         strokeDashoffset: 0,
         duration: 3,
@@ -337,8 +339,8 @@ paths.forEach((path, index) => {
         ease: "Expo.out",
         scrollTrigger: {
             trigger: ".bottom",
-            start: "top 50%",
-            once: true, // Animation happens once when triggered
+            start: "top bottom",
+            once: true,
         },
         onComplete: () => {
             gsap.to(path, {
