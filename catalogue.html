@@ -34,24 +34,38 @@
 </div>
 
 <div class="sorting-stuff">
-    <div class="categories">
-        <p>Category 
-            <svg class="l-o" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M4 6L8 10L12 6" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-          </p>
+    <div class="dropdown">
+      <label for="categories" class="dropdown-label">
+        <span class="label-text">Category</span>
+        <svg class="l-o" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M4 6L8 10L12 6" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </label>
+      <select id="categories" name="categories" onchange="updateLabel(this)">
+        <option value="none">Category</option>
+        <option value="bottoms">Bottoms</option>
+        <option value="hats">Hats</option>
+      </select>
     </div>
-
-    <div class="sorting">
-        <p>Newest 
-            <svg class="l-o" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <line x1="2" y1="4" x2="14" y2="4" stroke="black" stroke-width="2"/>
-            <line x1="4" y1="8" x2="12" y2="8" stroke="black" stroke-width="2"/>
-            <line x1="6" y1="12" x2="10" y2="12" stroke="black" stroke-width="2"/>
-          </svg>
-          </p>
+  
+    <!-- Sorting Dropdown -->
+    <div class="dropdown">
+      <label for="sorting" class="dropdown-label">
+        <span class="label-text">Sorting</span>
+        <svg class="l-o" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <line x1="2" y1="4" x2="14" y2="4" stroke="black" stroke-width="2"/>
+          <line x1="4" y1="8" x2="12" y2="8" stroke="black" stroke-width="2"/>
+          <line x1="6" y1="12" x2="10" y2="12" stroke="black" stroke-width="2"/>
+        </svg>
+      </label>
+      <select id="sorting" name="sorting" onchange="updateLabel(this)">
+        <option value="newest">Sorting</option>
+        <option value="newest">Newest</option>
+        <option value="oldest">Oldest</option>
+      </select>
     </div>
-</div>
+  </div>
+  
 
 <div class="catalogue-grid">
     <div class="catalogue-item">
@@ -196,8 +210,20 @@
     </div>
   </div>
 
+  <div class="spacer"></div>
+
 
 <div class="tint"></div>
+
+
+<script>
+function updateLabel(select) {
+  const label = select.previousElementSibling.querySelector('.label-text');
+  const selectedOption = select.options[select.selectedIndex].text;
+  label.textContent = selectedOption;
+}
+
+</script>
 
 </body>
 </html>

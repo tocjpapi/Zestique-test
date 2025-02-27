@@ -331,7 +331,7 @@ body {
 .bottom {
     position: relative;
     background: var(--bg);
-    height: 100vh;
+    height: 105vh;
     width: 100vw;
     overflow: hidden;
     display: flex;
@@ -349,7 +349,7 @@ svg path {
 }
 
 .spacer{
-    height: 13rem;
+    height: 10rem;
     background: var(--bg);
 }
 
@@ -515,6 +515,33 @@ input {
     align-items: center;
     justify-content: space-between;
   }
+
+  
+  .dropdown {
+    position: relative;
+  }
+  
+  .dropdown-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+  }
+  
+  .label-text {
+    color: var(--text);
+  }
+  
+  select {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+  }
+  
 
   .l-o{
     opacity: 0.5; 
