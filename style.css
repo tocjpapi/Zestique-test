@@ -241,7 +241,7 @@ body {
 
 .second{
     background: var(--bg);
-    height: 95rem;
+    height: 105rem;
     width: 100vw;
     overflow: hidden;
     z-index: 100;
@@ -359,6 +359,7 @@ svg path {
     display: flex;
     align-items: center;
     position: relative;
+    background: var(--bg);
 }
 
 .featured{
@@ -372,17 +373,55 @@ svg path {
 }
 
 .show-clothes{
-    height: 100%;
-    width: calc(100vw - 8rem);
-    margin-left: 4rem;
+    height: 51rem;
+    width: calc(100vw);
+    padding-left: 4rem;
+    padding-right: 4rem;
     display: flex;
     gap: 3rem;
+    background: var(--bg);
+}
+
+
+.colorize{
+    height: 100%;
+    width: 100%;
+    background: var(--bg);
 }
 
 .s-c{
     height: 100%;
     width: calc((100% / 3) - 1.5rem );
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+
+}
+
+.c-i{
+    height: 48rem;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     background: #cfcfcf;
+    overflow: hidden;
+}
+
+.d-c{
+    height: 3rem;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--bg);
+    font-size: 1.2rem;
+}
+
+.item-name{
+    color: #000;
 }
 
 .parallaxy{
