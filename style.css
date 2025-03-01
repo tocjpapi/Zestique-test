@@ -353,6 +353,10 @@ svg path {
     background: var(--bg);
 }
 
+.spacer-mini{
+  height: 8rem;
+}
+
 .featured-header{
     height: 45rem;
     width: 100%;
@@ -572,6 +576,9 @@ input {
 
 
 
+  /* cart */
+
+
   .total span{
     font-family: 'serif';
   }
@@ -644,3 +651,108 @@ input {
     color: var(--text);
     cursor: pointer;
   }
+
+/* product-page */
+
+
+.back-button{
+  position: fixed;
+  left: 4rem;
+  top: 4rem;
+  font-size: 2rem;
+  z-index: 9;
+}
+
+.back-button-spacer{
+  height: 8rem;
+  width: 100vw;
+
+}
+
+.product-pics{
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  width: 67.8rem;
+  margin-left: 4rem;
+  position: relative;
+}
+
+.product-pic{
+  height: 67.8rem;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #cfcfcf;
+}
+
+.fixed-right {
+  position: fixed;
+  top: 8.5rem;
+  right: 4rem;
+  height: calc(100vh - 12.5rem);
+  width: calc(50vw - 4.5rem);
+}
+
+.flexed-about{
+  display: flex;
+  flex-direction: column;
+  gap: 3.5rem;
+}
+
+.absolute-no{
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  font-size: 9rem;
+  color: #1b1b1b;
+}
+
+.product-name{
+  font-size: 2rem;
+}
+
+.product-desc{
+  font-size: 1.3rem;
+  width: 30rem;
+}
+
+.flexed{
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  position: relative;
+  height: fit-content;
+}
+
+.word{
+  font-size: 1.5rem;
+}
+
+.wrapper{
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  position: relative;
+  height: fit-content;
+  align-items: center;
+}
+
+.boss{
+  height: fit-content;
+  width: fit-content;
+  display: flex;
+  gap: 1.3rem;
+}
+
+.color-box{
+  height: 3rem;
+  width: 3rem;
+  border-radius: 50%;
+}
+
+.color-name{
+  font-size: 1.1rem;
+}
