@@ -663,7 +663,12 @@ input {
     background: #cfcfcf;
     color: var(--text);
     cursor: pointer;
+    transition: background 0.7s ease;
   }
+
+    .proceed-to-checkout-box:hover{
+      background: #bcbcbc;
+    }
 
 /* product-page */
 
@@ -848,11 +853,14 @@ input.number::-webkit-inner-spin-button {
   text-align: center;
 }
 
+.cart-word{
+  cursor: pointer;
+}
+
 .cart-word p {
   width: fit-content;
   padding-bottom: 0.45rem;
-  position: relative;
-  cursor: pointer; 
+  position: relative; 
 }
 
 .cart-word p::after {
