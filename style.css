@@ -4,6 +4,29 @@
     --light-text: #f5f5f5;
     --default-text: 1.7rem;
 }
+
+.seo-anchor {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  text-indent: -9999px; 
+  background: transparent;
+  z-index: 10;
+}
+
+a{
+  color: inherit;
+  text-decoration: none;
+}
+
+
+.nav-item{
+  height: fit-content;
+  width: fit-content;
+}
+
      
 @font-face {
     font-family: 'sans-serif';
@@ -59,6 +82,46 @@ html.lenis, html.lenis body {
     text-rendering: optimizeLegibility;
 }
 
+.bg {
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  right: -50%;
+  bottom: -50%;
+  width: 200%;
+  height: 200vh;
+  background: transparent url('assets/images/noise.png') repeat 0 0;
+  background-repeat: repeat;
+  animation: bg-animation .2s infinite;
+  opacity: 1;
+  visibility: visible;
+  z-index: 10;
+  pointer-events: none;
+}
+
+@keyframes bg-animation {
+  0% { transform: translate(0,0) }
+  10% { transform: translate(-5%,-5%) }
+  20% { transform: translate(-10%,5%) }
+  30% { transform: translate(5%,-10%) }
+  40% { transform: translate(-5%,15%) }
+  50% { transform: translate(-10%,5%) }
+  60% { transform: translate(15%,0) }
+  70% { transform: translate(0,10%) }
+  80% { transform: translate(-15%,0) }
+  90% { transform: translate(10%,5%) }
+  100% { transform: translate(5%,0) }
+}
+
+
+.first video{
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  opacity: 0.7;
+  will-change: transform;
+}
+
   .tint{
     opacity: 0.05;
     background: #514e00;
@@ -98,6 +161,7 @@ html {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
+    overscroll-behavior: none;
 }
 
 
@@ -111,7 +175,7 @@ body {
   overflow-x: hidden;
   width: 100vw;
   height: 100vh; 
-  overscroll-behavior: contain;  
+  overscroll-behavior: none;
   -webkit-user-select: none;
   -khtml-user-select: none;
   -moz-user-select: none;
@@ -148,17 +212,18 @@ body {
     align-items: center;
     justify-content: center;
     position: relative;
+    will-change: transform;
 }
 
 .nav{
     position: absolute ;
     top: 4rem;
     right: 4rem;
-    color: var(--bg);
+    color: #a1a1a1;
     z-index: 9;
-    opacity: 0.8;
     display: flex;
     gap: 0.9rem;
+    mix-blend-mode: difference;
 }
 
 .arrow-down{
@@ -283,6 +348,7 @@ body {
     pointer-events: none;
     z-index: 9;
     background: #1b1b1b;
+    will-change: opacity;
 }
 
 .fade-in{
@@ -311,6 +377,14 @@ body {
     bottom: 9rem;
     font-size: 1.2rem;
     width: 12rem;
+}
+
+.mini2 a {
+  transition: opacity 0.3s ease;
+}
+
+.mini2 a:hover{
+  opacity: 0.5;
 }
 
 .mini p{
@@ -417,6 +491,20 @@ svg path {
     justify-content: center;
     background: #cfcfcf;
     overflow: hidden;
+    filter: grayscale();
+    position: relative;
+    transition: filter 0.3s ease;
+}
+
+.c-i:hover{
+    filter: grayscale(0.3);
+}
+
+.c-i img{
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  left: 0;
 }
 
 .d-c{
@@ -447,6 +535,9 @@ svg path {
     position: relative;
     filter: grayscale();
     background: #1b1b1b;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .parallaxy img{
@@ -779,6 +870,14 @@ input {
     cursor: pointer;
 }
 
+.nav-item:hover{
+  opacity: 0.5;
+}
+
+.nav-item{
+  transition: opacity 0.3s ease;
+}
+
 .color-box{
   height: 3.2rem;
   width: 3.2rem;
@@ -876,4 +975,39 @@ input.number::-webkit-inner-spin-button {
 
 .cart-word p:hover::after {
   width: 0%;
+}
+
+.loadertxt{
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg);
+  z-index: 99;
+}
+
+.centre-lodr {
+  width: 80rem;
+  height: 40rem;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.centre-lodr svg{
+  width: 80rem;
+  height: 80rem;
+}
+
+.c{
+  position: absolute;
+  bottom: 4rem;
+  overflow: hidden;
+  font-size: 1.2rem;
+  text-transform: uppercase;
 }
