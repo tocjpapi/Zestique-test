@@ -9,6 +9,9 @@
     <link rel="stylesheet" href="../style.css">
 </head>
 <body>
+
+
+<div class="desktop">
     <div class="catalogue-header">
         <div class="nav">
             <div class="nav-item">
@@ -19,6 +22,9 @@
                 <a href="/Cart/">Cart (<span id="in-cart">0</span>)</a>
             </div>
         </div>
+
+
+
         <div class="catalogue-statement">
             <p><span>c</span>atalogue;</p>
         </div>
@@ -169,7 +175,7 @@
     </div>
     <div class="catalogue-item">
         <div class="c-i">
-            <img draggable="false" src="assets/images/clothes/test-default.png" alt="" srcset="">
+            <img draggable="false" src="../assets/images/clothes/test-default.png" alt="" srcset="">
         </div>
         <div class="d-c">
             <div class="item-name">
@@ -212,155 +218,235 @@
   </div>
 
   <div class="spacer"></div>
+</div>
 
+
+
+<div class="mobile">
+
+
+ 
+<div class="catalogue-header">
+            <div class="nav-mobile">
+                <div class="nav-item">
+                    <a href="/">Home,</a>
+                </div>
+            
+                <div class="nav-item">
+                    <a href="/Cart/">Cart (<span id="in-cart">0</span>)</a>
+                </div>
+            </div>
+    
+    
+    
+            <div class="catalogue-statement">
+                <p><span>c</span>atalogue;</p>
+            </div>
+</div>
+
+
+<div class="search-stuff">
+
+    <div id="search-bar" class="search-bar">
+        <input type="text" placeholder="Search">
+</div>
+</div>
+
+
+
+<div class="sorting-stuff">
+<div class="dropdown">
+  <label for="categories" class="dropdown-label">
+    <span class="label-text">Category</span>
+    <svg class="l-o" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 6L8 10L12 6" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </label>
+  <select id="categories" name="categories" onchange="updateLabel(this)">
+    <option value="none">Category</option>
+    <option value="tops">Tops</option>
+    <option value="bottoms">Bottoms</option>
+    <option value="hats">Hats</option>
+  </select>
+</div>
+
+<!-- Sorting Dropdown -->
+<div class="dropdown">
+  <label for="sorting" class="dropdown-label">
+    <span class="label-text">Sorting</span>
+    <svg class="l-o" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <line x1="2" y1="4" x2="14" y2="4" stroke="black" stroke-width="2"/>
+      <line x1="4" y1="8" x2="12" y2="8" stroke="black" stroke-width="2"/>
+      <line x1="6" y1="12" x2="10" y2="12" stroke="black" stroke-width="2"/>
+    </svg>
+  </label>
+  <select id="sorting" name="sorting" onchange="updateLabel(this)">
+    <option value="newest">Sorting</option>
+    <option value="newest">Newest</option>
+    <option value="oldest">Oldest</option>
+  </select>
+</div>
+</div>
+
+<div class="mobile-spacer2"></div>
+
+<div class="catalogue-grid">
+    <div class="catalogue-item">
+        <div class="c-i">
+            <img draggable="false" src="../assets/images/clothes/test-default.png" alt="" srcset="">
+        </div>
+        <div class="d-c">
+            <div class="item-name">
+                <p>Button Up Shirt</p>
+            </div>
+
+            <div class="item-price">
+                <p>NGN 20,000</p>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="catalogue-item">
+        <div class="c-i">
+            <img draggable="false" src="../assets/images/clothes/test-default.png" alt="" srcset="">
+        </div>
+        <div class="d-c">
+            <div class="item-name">
+                <p>Button Up Shirt</p>
+            </div>
+
+            <div class="item-price">
+                <p>NGN 20,000</p>
+            </div>
+        </div>
+    </div>
+    <div class="catalogue-item">
+        <div class="c-i">
+            <img draggable="false" src="../assets/images/clothes/test-default.png" alt="" srcset="">
+        </div>
+        <div class="d-c">
+            <div class="item-name">
+                <p>Button Up Shirt</p>
+            </div>
+
+            <div class="item-price">
+                <p>NGN 20,000</p>
+            </div>
+        </div>
+    </div>
+    <div class="catalogue-item">
+        <div class="c-i">
+            <img draggable="false" src="../assets/images/clothes/test-default.png" alt="" srcset="">
+        </div>
+        <div class="d-c">
+            <div class="item-name">
+                <p>Button Up Shirt</p>
+            </div>
+
+            <div class="item-price">
+                <p>NGN 20,000</p>
+            </div>
+        </div>
+    </div>
+    <div class="catalogue-item">
+        <div class="c-i">
+            <img draggable="false" src="../assets/images/clothes/test-default.png" alt="" srcset="">
+        </div>
+        <div class="d-c">
+            <div class="item-name">
+                <p>Button Up Shirt</p>
+            </div>
+
+            <div class="item-price">
+                <p>NGN 20,000</p>
+            </div>
+        </div>
+    </div>
+    <div class="catalogue-item">
+        <div class="c-i">
+            <img draggable="false" src="../assets/images/clothes/test-default.png" alt="" srcset="">
+        </div>
+        <div class="d-c">
+            <div class="item-name">
+                <p>Button Up Shirt</p>
+            </div>
+
+            <div class="item-price">
+                <p>NGN 20,000</p>
+            </div>
+        </div>
+    </div>
+    <div class="catalogue-item">
+        <div class="c-i">
+            <img draggable="false" src="../assets/images/clothes/test-default.png" alt="" srcset="">
+        </div>
+        <div class="d-c">
+            <div class="item-name">
+                <p>Button Up Shirt</p>
+            </div>
+
+            <div class="item-price">
+                <p>NGN 20,000</p>
+            </div>
+        </div>
+    </div>
+    <div class="catalogue-item">
+        <div class="c-i">
+            <img draggable="false" src="../assets/images/clothes/test-default.png" alt="" srcset="">
+        </div>
+        <div class="d-c">
+            <div class="item-name">
+                <p>Button Up Shirt</p>
+            </div>
+
+            <div class="item-price">
+                <p>NGN 20,000</p>
+            </div>
+        </div>
+    </div>
+    <div class="catalogue-item">
+        <div class="c-i">
+            <img draggable="false" src="../assets/images/clothes/test-default.png" alt="" srcset="">
+        </div>
+        <div class="d-c">
+            <div class="item-name">
+                <p>Button Up Shirt</p>
+            </div>
+
+            <div class="item-price">
+                <p>NGN 20,000</p>
+            </div>
+        </div>
+    </div>
+    <div class="catalogue-item">
+        <div class="c-i">
+            <img draggable="false" src="../assets/images/clothes/test-default.png" alt="" srcset="">
+        </div>
+        <div class="d-c">
+            <div class="item-name">
+                <p>Button Up Shirt</p>
+            </div>
+
+            <div class="item-price">
+                <p>NGN 20,000</p>
+            </div>
+        </div>
+    </div>
+  </div>
+
+<div class="mobile-spacer"></div>
+
+
+</div>
 
 <div class="tint"></div>
 
-<script src="assets/js/lenis.js"></script>
-<script src="assets/js/gsap.js"></script>
-<script src="assets/js/ScrollTrigger.js"></script>
+<script src="../assets/js/lenis.js"></script>
+<script src="../assets/js/gsap.js"></script>
+<script src="../assets/js/ScrollTrigger.js"></script>
 
-<script>
-
-
-    const lenis = new Lenis({
-        duration: 1,
-        direction: 'vertical',
-        gestureDirection: 'vertical',
-        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-        smooth: true,
-        smoothTouch: false,
-        touchMultiplier: 1,
-
-        infinite: false,
-    });
-    
-    function raf(time) {
-        lenis.raf(time);
-        requestAnimationFrame(raf);
-    }
-    
-    requestAnimationFrame(raf);
-    
-    let isDragging = false;
-    let startY = 0;
-    let startScrollY = 0;
-    let targetScrollY = 0;
-    let lastScrollY = 0;
-    let velocity = 0;
-    let isAnimating = false;
-    let clickDisabled = false;
-    const friction = 0;
-    const dragSensitivity = 1.2;
-    
-    function clampScroll(scrollY) {
-        const maxScrollY = document.documentElement.scrollHeight - window.innerHeight;
-        return Math.max(0, Math.min(scrollY, maxScrollY));
-    }
-    
-    document.addEventListener('mousedown', (event) => {
-        isDragging = true;
-        startY = event.clientY;
-        startScrollY = lenis.scroll;
-        lastScrollY = startScrollY;
-    });
-    
-    document.addEventListener('mousemove', (event) => {
-        if (isDragging) {
-            const deltaY = (event.clientY - startY) * dragSensitivity;
-            targetScrollY = clampScroll(startScrollY - deltaY);
-            if (!isAnimating) {
-                animateScroll();
-            }
-        }
-    });
-    
-    document.addEventListener('mouseup', () => {
-        isDragging = false;
-        clickDisabled = true;
-    
-        setTimeout(() => {
-            clickDisabled = false;
-        }, 100);
-    
-        if (Math.abs(velocity) > 0.1) {
-            applyInertia();
-        }
-    });
-    
-    document.addEventListener('click', (event) => {
-        if (clickDisabled) {
-            event.preventDefault(); 
-            event.stopPropagation();
-        }
-    });
-    
-    document.addEventListener('selectstart', (event) => {
-        if (isDragging) {
-            event.preventDefault();
-        }
-    });
-    
-    document.addEventListener('keydown', (event) => {
-        const scrollAmount = 200; 
-        if (event.key === 'ArrowUp') {
-            targetScrollY = clampScroll(lenis.scroll - scrollAmount);
-            animateScroll();
-        } else if (event.key === 'ArrowDown') {
-            targetScrollY = clampScroll(lenis.scroll + scrollAmount);
-            animateScroll();       
-        } else if (event.key === 'ArrowLeft') {
-            targetScrollY = clampScroll(lenis.scroll - scrollAmount);
-            animateScroll();
-        } else if (event.key === 'ArrowRight') {
-            targetScrollY = clampScroll(lenis.scroll + scrollAmount);
-            animateScroll();
-        }
-        
-        else if (event.key === ' ') {
-            event.preventDefault(); 
-            targetScrollY = clampScroll(lenis.scroll + window.innerHeight);
-            animateScroll();
-        }
-    });
-    
-    function easeOutCubic(t) {
-        return 1 - Math.pow(1 - t, 3);
-    }
-    
-    function animateScroll() {
-        isAnimating = true;
-        const currentScrollY = lenis.scroll;
-        const distance = targetScrollY - currentScrollY;
-        const easing = easeOutCubic(Math.min(1, Math.abs(distance) / 100));
-        const newScrollY = currentScrollY + distance * easing;
-        lenis.scrollTo(newScrollY);
-    
-        if (Math.abs(targetScrollY - newScrollY) > 0.5) {
-            requestAnimationFrame(animateScroll);
-        } else {
-            isAnimating = false;
-        }
-    }
-    
-    function applyInertia() {
-        const inertia = (targetScrollY - lastScrollY) * 0.3;
-        function inertiaScroll() {
-            velocity *= friction;
-            const newScrollY = clampScroll(lenis.scroll + velocity);
-            if (Math.abs(velocity) > 0.1 && newScrollY !== 0 && newScrollY !== document.documentElement.scrollHeight - window.innerHeight) {
-                lenis.scroll = newScrollY;
-                requestAnimationFrame(inertiaScroll);
-            }
-        }
-        velocity = inertia;
-        inertiaScroll();
-    }
-
-
-
-
-</script>
+<script src="../assets/js/d.js"></script>
 
 <script>
 function updateLabel(select) {

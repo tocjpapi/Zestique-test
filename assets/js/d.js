@@ -1,5 +1,5 @@
 const lenis = new Lenis({
-    duration: 1,
+    duration: 0.5,
     direction: 'vertical',
     gestureDirection: 'vertical',
     easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -152,6 +152,12 @@ document.addEventListener('contextmenu', function(e) {
     }
 });
 
+document.addEventListener('contextmenu', function(e) {
+  if (e.target?.tagName === 'VIDEO') {
+      e.preventDefault();
+  }
+});
+
 // First path animation
 if (typeof gsap !== 'undefined') {
     gsap.registerPlugin(ScrollTrigger);
@@ -227,7 +233,7 @@ if (typeof gsap !== 'undefined') {
     
     if (firstSection && inFirstSection) {
         gsap.to(firstSection, {
-            yPercent: 230,
+            yPercent: 250,
             ease: "none",
             scrollTrigger: {
                 trigger: inFirstSection,
@@ -325,7 +331,7 @@ if (typeof gsap !== 'undefined') {
 
     if (firstVideoLoader) {
         tl.from(firstVideoLoader, {
-            opacity: 0.3,
+            opacity: 0.1,
             scale: '1.5',
             duration: 2.5,
             ease: 'expo.inOut',
@@ -346,4 +352,66 @@ if (dots) {
     dots.textContent = ".".repeat(dotCount);
   }, 400);
 
+}
+
+
+//hover parallax
+
+const container = document.querySelector('.inside-this');
+if (container) {
+    const inner = container.querySelector('.this-inner');
+    const text = container.querySelector('.r-c-t');
+
+    let targetX = 0, targetY = 0;
+    let currentX = 0, currentY = 0;
+    let containerTargetX = 0, containerTargetY = 0;
+    let containerCurrentX = 0, containerCurrentY = 0;
+    let textTargetX = 0, textTargetY = 0;
+    let textCurrentX = 0, textCurrentY = 0;
+
+    container.addEventListener('mousemove', (e) => {
+        const rect = container.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const offsetX = (x / rect.width - 0.5);
+        const offsetY = (y / rect.height - 0.5);
+
+        targetX = offsetX * 40;
+        targetY = offsetY * 40;
+        containerTargetX = offsetX * -10;
+        containerTargetY = offsetY * -10;
+        textTargetX = offsetX * 20;
+        textTargetY = offsetY * 20;
+    });
+
+    container.addEventListener('mouseleave', () => {
+        targetX = 0;
+        targetY = 0;
+        containerTargetX = 0;
+        containerTargetY = 0;
+        textTargetX = 0;
+        textTargetY = 0;
+    });
+
+    function animate() {
+        if (inner) {
+            currentX += (targetX - currentX) * 0.1;
+            currentY += (targetY - currentY) * 0.1;
+            inner.style.transform = `translate(-50%, -50%) translate(${currentX}px, ${currentY}px)`;
+        }
+
+        containerCurrentX += (containerTargetX - containerCurrentX) * 0.05;
+        containerCurrentY += (containerTargetY - containerCurrentY) * 0.05;
+        container.style.transform = `translate(${containerCurrentX}px, ${containerCurrentY}px)`;
+
+        if (text) {
+            textCurrentX += (textTargetX - textCurrentX) * 0.08;
+            textCurrentY += (textTargetY - textCurrentY) * 0.08;
+            text.style.transform = `translate(-50%, -50%) translate(${textCurrentX}px, ${textCurrentY}px)`;
+        }
+
+        requestAnimationFrame(animate);
+    }
+
+    animate();
 }
