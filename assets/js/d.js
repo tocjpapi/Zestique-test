@@ -137,10 +137,10 @@ const lenis = new Lenis({
     inertiaScroll();
   }
   
-  document.querySelectorAll(".scroll-to-top").forEach(button => {
+  document.querySelectorAll(".location-mini2").forEach(button => {
     button.addEventListener("click", (e) => {
       e.preventDefault();
-      lenis.scrollTo(0);
+      lenis.scrollTo(600);
     });
   });
   
@@ -358,9 +358,15 @@ if (dots) {
 //hover parallax
 
 const container = document.querySelector('.inside-this');
+
 if (container) {
     const inner = container.querySelector('.this-inner');
     const text = container.querySelector('.r-c-t');
+
+    const innerImages = inner ? inner.querySelectorAll('img') : [];
+
+    // Exclude images inside `.this-inner`
+    const containerImages = Array.from(container.querySelectorAll('img')).filter(img => !inner || !inner.contains(img));
 
     let targetX = 0, targetY = 0;
     let currentX = 0, currentY = 0;
@@ -368,6 +374,22 @@ if (container) {
     let containerCurrentX = 0, containerCurrentY = 0;
     let textTargetX = 0, textTargetY = 0;
     let textCurrentX = 0, textCurrentY = 0;
+
+    let innerImageTargets = [];
+    let innerImageCurrents = [];
+
+    let containerImageTargets = [];
+    let containerImageCurrents = [];
+
+    innerImages.forEach(() => {
+        innerImageTargets.push({ x: 0, y: 0 });
+        innerImageCurrents.push({ x: 0, y: 0 });
+    });
+
+    containerImages.forEach(() => {
+        containerImageTargets.push({ x: 0, y: 0 });
+        containerImageCurrents.push({ x: 0, y: 0 });
+    });
 
     container.addEventListener('mousemove', (e) => {
         const rect = container.getBoundingClientRect();
@@ -382,6 +404,16 @@ if (container) {
         containerTargetY = offsetY * -10;
         textTargetX = offsetX * 20;
         textTargetY = offsetY * 20;
+
+        innerImageTargets = innerImageTargets.map(() => ({
+            x: offsetX * -8,
+            y: offsetY * -8
+        }));
+
+        containerImageTargets = containerImageTargets.map(() => ({
+            x: offsetX * -6,
+            y: offsetY * -6
+        }));
     });
 
     container.addEventListener('mouseleave', () => {
@@ -391,6 +423,9 @@ if (container) {
         containerTargetY = 0;
         textTargetX = 0;
         textTargetY = 0;
+
+        innerImageTargets = innerImageTargets.map(() => ({ x: 0, y: 0 }));
+        containerImageTargets = containerImageTargets.map(() => ({ x: 0, y: 0 }));
     });
 
     function animate() {
@@ -410,8 +445,344 @@ if (container) {
             text.style.transform = `translate(-50%, -50%) translate(${textCurrentX}px, ${textCurrentY}px)`;
         }
 
+        innerImages.forEach((img, i) => {
+            const target = innerImageTargets[i];
+            const current = innerImageCurrents[i];
+            current.x += (target.x - current.x) * 0.1;
+            current.y += (target.y - current.y) * 0.1;
+            img.style.transform = `translate(${current.x}px, ${current.y}px)`;
+        });
+
+        containerImages.forEach((img, i) => {
+            const target = containerImageTargets[i];
+            const current = containerImageCurrents[i];
+            current.x += (target.x - current.x) * 0.1;
+            current.y += (target.y - current.y) * 0.1;
+            img.style.transform = `translate(${current.x}px, ${current.y}px)`;
+        });
+
         requestAnimationFrame(animate);
     }
 
     animate();
 }
+
+
+
+document.addEventListener("DOMContentLoaded", function() {
+  // Color and Size Box Selection
+  function setupBoxSelection(selector, activeClass) {
+      const boxes = document.querySelectorAll(selector);
+      if (!boxes.length) return;
+
+      boxes.forEach(box => {
+          box.addEventListener('click', () => {
+              document.querySelectorAll(selector).forEach(b => b.classList.remove(activeClass));
+              box.classList.add(activeClass);
+          });
+      });
+  }
+
+  setupBoxSelection('.color-box', 'active');
+  setupBoxSelection('.sizes-box', 'active');
+
+  // Dropdown and Box Sync Logic
+  function setupDropdownSync() {
+      const colorSelect = document.querySelector('.dropdown-select');
+      const sizeSelect = document.querySelectorAll('.dropdown-select')[1];
+      
+      if (!colorSelect || !sizeSelect) return;
+
+      const colorDisplay = colorSelect.nextElementSibling;
+      const sizeDisplay = sizeSelect?.nextElementSibling;
+      const colorBoxes = document.querySelectorAll('.color-box-wrapper');
+      const sizeBoxes = document.querySelectorAll('.sizes-box-wrapper');
+
+      function createOptionsFromElements(select, display, elements, getValue) {
+          if (!select || !display || !elements.length) return;
+          
+          select.innerHTML = '';
+          elements.forEach((el) => {
+              const value = getValue(el);
+              if (value) {
+                  const option = document.createElement('option');
+                  option.value = value;
+                  option.textContent = value;
+                  select.appendChild(option);
+              }
+          });
+          if (select.options.length) {
+              display.textContent = select.value;
+          }
+      }
+
+      // Initialize dropdowns
+      if (colorBoxes.length) {
+          createOptionsFromElements(
+              colorSelect, 
+              colorDisplay, 
+              colorBoxes, 
+              el => el.querySelector('.color-name')?.textContent?.trim()
+          );
+      }
+
+      if (sizeBoxes.length) {
+          createOptionsFromElements(
+              sizeSelect, 
+              sizeDisplay, 
+              sizeBoxes, 
+              el => el.querySelector('.sizes-box')?.textContent?.trim()
+          );
+      }
+
+      // Handle dropdown changes
+      function handleSelectChange(select, display, boxes, boxSelector, isColor) {
+          if (!select || !display || !boxes.length) return;
+          
+          select.addEventListener('change', function() {
+              const value = this.value;
+              display.textContent = value;
+
+              boxes.forEach(box => {
+                  const content = isColor 
+                      ? box.querySelector('.color-name')?.textContent?.trim()
+                      : box.querySelector('.sizes-box')?.textContent?.trim();
+                  
+                  if (content === value) {
+                      box.querySelector(boxSelector)?.classList.add('active');
+                  } else {
+                      box.querySelector(boxSelector)?.classList.remove('active');
+                  }
+              });
+          });
+      }
+
+      handleSelectChange(colorSelect, colorDisplay, colorBoxes, '.color-box', true);
+      handleSelectChange(sizeSelect, sizeDisplay, sizeBoxes, '.sizes-box', false);
+
+      // Sync box clicks to dropdowns
+      function syncBoxToDropdown(boxes, boxSelector, select, display, getValue) {
+          boxes.forEach(box => {
+              const boxElement = box.querySelector(boxSelector);
+              if (!boxElement) return;
+
+              const value = getValue(box);
+              if (!value) return;
+
+              boxElement.addEventListener('click', () => {
+                  if (select && display) {
+                      select.value = value;
+                      display.textContent = value;
+                  }
+              });
+          });
+      }
+
+      syncBoxToDropdown(
+          colorBoxes, 
+          '.color-box', 
+          colorSelect, 
+          colorDisplay, 
+          el => el.querySelector('.color-name')?.textContent?.trim()
+      );
+
+      syncBoxToDropdown(
+          sizeBoxes, 
+          '.sizes-box', 
+          sizeSelect, 
+          sizeDisplay, 
+          el => el.querySelector('.sizes-box')?.textContent?.trim()
+      );
+  }
+  setupDropdownSync();
+
+  // Quantity Logic
+  function setupQuantityControls() {
+      const desktopQuantity = document.getElementById('quantity');
+      const mobileQuantity = document.querySelector('.styled-input');
+      const decreaseBtn = document.getElementById('decrease');
+      const increaseBtn = document.getElementById('increase');
+
+      if (!desktopQuantity && !mobileQuantity) return;
+
+      function updateButtons(value) {
+          if (decreaseBtn) {
+              decreaseBtn.classList.toggle('disabled', value <= 1);
+          }
+      }
+
+      function setQuantity(value) {
+          value = isNaN(value) || value < 1 ? 1 : value;
+          if (desktopQuantity) desktopQuantity.value = value;
+          if (mobileQuantity) mobileQuantity.value = value;
+          updateButtons(value);
+      }
+
+      if (increaseBtn) {
+          increaseBtn.addEventListener('click', () => {
+              const currentValue = desktopQuantity ? parseInt(desktopQuantity.value) : 
+                                mobileQuantity ? parseInt(mobileQuantity.value) : 1;
+              setQuantity(currentValue + 1);
+          });
+      }
+
+      if (decreaseBtn) {
+          decreaseBtn.addEventListener('click', () => {
+              const currentValue = desktopQuantity ? parseInt(desktopQuantity.value) : 
+                                mobileQuantity ? parseInt(mobileQuantity.value) : 1;
+              setQuantity(currentValue - 1);
+          });
+      }
+
+      if (desktopQuantity) {
+          desktopQuantity.addEventListener('input', () => {
+              setQuantity(parseInt(desktopQuantity.value));
+          });
+          desktopQuantity.addEventListener('wheel', (e) => e.preventDefault());
+      }
+
+      if (mobileQuantity) {
+          mobileQuantity.addEventListener('input', () => {
+              setQuantity(parseInt(mobileQuantity.value));
+          });
+          mobileQuantity.addEventListener('wheel', (e) => e.preventDefault());
+      }
+
+      // Initial sync
+      const initialValue = desktopQuantity ? parseInt(desktopQuantity.value) : 
+                        mobileQuantity ? parseInt(mobileQuantity.value) : 1;
+      setQuantity(initialValue);
+  }
+  setupQuantityControls();
+
+  // Image Scroller
+  function setupImageScroller() {
+      const scroller = document.querySelector('.image-scroller');
+      const currentImageEl = document.getElementById('current-image');
+      const totalImageEl = document.getElementById('total-images');
+      const sourceImages = document.querySelectorAll('.product-pics .product-pic img');
+
+      if (!scroller || !sourceImages.length) return;
+
+      // Clear existing images
+      scroller.innerHTML = '';
+
+      // Clone each image and append to scroller
+      sourceImages.forEach(img => {
+          const clone = img.cloneNode(true);
+          scroller.appendChild(clone);
+      });
+
+      // Update total image count
+      if (totalImageEl) {
+          totalImageEl.textContent = sourceImages.length;
+      }
+
+      function updateCurrentImage() {
+          if (!scroller || !currentImageEl) return;
+          const scrollLeft = scroller.scrollLeft;
+          const width = scroller.clientWidth;
+          const index = Math.round(scrollLeft / width);
+          currentImageEl.textContent = index + 1;
+      }
+
+      // Initialize current image index
+      updateCurrentImage();
+
+      // Listen to scroll
+      scroller.addEventListener('scroll', () => {
+          window.requestAnimationFrame(updateCurrentImage);
+      });
+  }
+  setupImageScroller();
+
+  // Mobile Title Sync
+  function syncMobileTitle() {
+      const sourceName = document.getElementById('name-of-selected-product');
+      const mobileTitle = document.querySelector('.clothes-title-mobile p');
+
+      if (sourceName && mobileTitle) {
+          mobileTitle.textContent = sourceName.textContent.trim();
+      }
+  }
+  syncMobileTitle();
+
+  // Cart Functionality
+  function setupCart() {
+      function updateCartCount() {
+          const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+          const count = cart.reduce((total, item) => total + (item.quantity || 0), 0);
+          
+          document.querySelectorAll('#in-cart, #in-cart-mobile').forEach(el => {
+              if (el) el.textContent = count;
+          });
+      }
+
+      function addToCart() {
+          document.querySelectorAll('#add-to-cart').forEach(button => {
+              button.addEventListener('click', () => {
+                  let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+
+                  const productName = document.getElementById('name-of-selected-product')?.textContent?.trim();
+                  const priceElement = document.querySelector('#price-word p');
+                  const productPrice = priceElement?.textContent?.trim().replace('NGN ', '').replace(/,/g, '');
+                  const productImage = document.querySelector('.product-pic img')?.src;
+
+                  if (!productName || !productPrice || !productImage) {
+                      console.error('Missing product information');
+                      return;
+                  }
+
+                  let selectedColor = '';
+                  const activeColorBox = document.querySelector('.color-box.active');
+                  if (activeColorBox) {
+                      selectedColor = activeColorBox.closest('.color-box-wrapper')?.querySelector('.color-name')?.textContent?.trim();
+                  } else {
+                      selectedColor = document.querySelector('.dropdown-display')?.textContent?.trim();
+                  }
+
+                  let selectedSize = '';
+                  const activeSizeBox = document.querySelector('.sizes-box.active');
+                  if (activeSizeBox) {
+                      selectedSize = activeSizeBox.textContent.trim();
+                  } else {
+                      const sizeDisplays = document.querySelectorAll('.dropdown-display');
+                      selectedSize = sizeDisplays[1]?.textContent?.trim();
+                  }
+
+                  const quantityInput = document.getElementById('quantity') || document.querySelector('.styled-input');
+                  const quantity = parseInt(quantityInput?.value) || 1;
+
+                  const cartItem = {
+                      name: productName,
+                      size: selectedSize || 'One Size',
+                      color: selectedColor || 'Default',
+                      quantity: quantity,
+                      price: productPrice,
+                      image: productImage
+                  };
+
+                  const existingItemIndex = cart.findIndex(item =>
+                      item.name === cartItem.name &&
+                      item.size === cartItem.size &&
+                      item.color === cartItem.color
+                  );
+
+                  if (existingItemIndex >= 0) {
+                      cart[existingItemIndex] = cartItem;
+                  } else {
+                      cart.push(cartItem);
+                  }
+
+                  localStorage.setItem('cart', JSON.stringify(cart));
+                  updateCartCount();
+                  alert('Item added to cart!');
+              });
+          });
+      }
+
+      addToCart();
+      updateCartCount();
+  }
+  setupCart();
+});
