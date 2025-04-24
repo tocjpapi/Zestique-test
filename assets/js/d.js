@@ -786,3 +786,12 @@ document.addEventListener("DOMContentLoaded", function() {
   }
   setupCart();
 });
+
+const elements = document.querySelectorAll('a, img');
+if (elements && elements.length > 0) {
+  elements.forEach(el => {
+    if (el) {
+      el.setAttribute('draggable', 'false');
+    }
+  });
+}
