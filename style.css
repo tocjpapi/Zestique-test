@@ -1536,7 +1536,7 @@ input.number::-webkit-inner-spin-button {
 
 
 .mobile-spacer{
-  height: 70rem;
+  height: 40rem;
   display: flex;
   align-items: center;
   position: relative;
@@ -1556,6 +1556,7 @@ input.number::-webkit-inner-spin-button {
   font-size: 50rem;
   font-family: 'serif';
   margin-left: 10rem;
+  margin-right: 10rem;
 }
 
 @keyframes switchColors {
@@ -1592,7 +1593,7 @@ input.number::-webkit-inner-spin-button {
   font-family: 'serif';
 }
 .mobile-footer{
-  height: 140rem;
+  height: 6rem;
   width: 100vw;
   background: var(--bg);
   position: relative;
