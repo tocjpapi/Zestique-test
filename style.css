@@ -943,7 +943,8 @@ input {
     color: var(--text);
     cursor: pointer;
     transition: background 0.7s ease;
-
+    border: 0.1rem dashed #333;
+    border-bottom: none;
   }
 
     .proceed-to-checkout-box:hover{
@@ -1598,6 +1599,7 @@ input.number::-webkit-inner-spin-button {
   align-items: center;
   justify-content: center;
 }
+
 
 
 
