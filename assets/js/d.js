@@ -598,62 +598,71 @@ document.addEventListener("DOMContentLoaded", function() {
 
   // Quantity Logic
   function setupQuantityControls() {
-      const desktopQuantity = document.getElementById('quantity');
-      const mobileQuantity = document.querySelector('.styled-input');
-      const decreaseBtn = document.getElementById('decrease');
-      const increaseBtn = document.getElementById('increase');
+    const desktopQuantity = document.getElementById('quantity');
+    const mobileQuantity = document.querySelector('.styled-input');
+    const decreaseBtn = document.getElementById('decrease');
+    const increaseBtn = document.getElementById('increase');
 
-      if (!desktopQuantity && !mobileQuantity) return;
+    if (!desktopQuantity && !mobileQuantity) return;
 
-      function updateButtons(value) {
-          if (decreaseBtn) {
-              decreaseBtn.classList.toggle('disabled', value <= 1);
-          }
-      }
+    function updateButtons(value) {
+        if (decreaseBtn) {
+            decreaseBtn.classList.toggle('disabled', value <= 1);
+        }
+    }
 
-      function setQuantity(value) {
-          value = isNaN(value) || value < 1 ? 1 : value;
-          if (desktopQuantity) desktopQuantity.value = value;
-          if (mobileQuantity) mobileQuantity.value = value;
-          updateButtons(value);
-      }
+    function setQuantity(value) {
+        value = isNaN(value) || value < 1 ? 1 : value;
+        if (desktopQuantity) desktopQuantity.value = value;
+        if (mobileQuantity) mobileQuantity.value = value;
+        updateButtons(value);
+    }
 
-      if (increaseBtn) {
-          increaseBtn.addEventListener('click', () => {
-              const currentValue = desktopQuantity ? parseInt(desktopQuantity.value) : 
-                                mobileQuantity ? parseInt(mobileQuantity.value) : 1;
-              setQuantity(currentValue + 1);
-          });
-      }
+    function getCurrentValue() {
+        const input = desktopQuantity || mobileQuantity;
+        const parsed = parseInt(input?.value);
+        return isNaN(parsed) ? 1 : parsed;
+    }
 
-      if (decreaseBtn) {
-          decreaseBtn.addEventListener('click', () => {
-              const currentValue = desktopQuantity ? parseInt(desktopQuantity.value) : 
-                                mobileQuantity ? parseInt(mobileQuantity.value) : 1;
-              setQuantity(currentValue - 1);
-          });
-      }
+    if (increaseBtn) {
+        increaseBtn.addEventListener('click', () => {
+            const currentValue = getCurrentValue();
+            setQuantity(currentValue + 1);
+        });
+    }
 
-      if (desktopQuantity) {
-          desktopQuantity.addEventListener('input', () => {
-              setQuantity(parseInt(desktopQuantity.value));
-          });
-          desktopQuantity.addEventListener('wheel', (e) => e.preventDefault());
-      }
+    if (decreaseBtn) {
+        decreaseBtn.addEventListener('click', () => {
+            const currentValue = getCurrentValue();
+            setQuantity(currentValue - 1);
+        });
+    }
 
-      if (mobileQuantity) {
-          mobileQuantity.addEventListener('input', () => {
-              setQuantity(parseInt(mobileQuantity.value));
-          });
-          mobileQuantity.addEventListener('wheel', (e) => e.preventDefault());
-      }
+    function attachInputEvents(input) {
+        input.addEventListener('input', () => {
+            const value = parseInt(input.value);
+            if (!isNaN(value) && value >= 1) {
+                updateButtons(value);
+            }
+        });
 
-      // Initial sync
-      const initialValue = desktopQuantity ? parseInt(desktopQuantity.value) : 
-                        mobileQuantity ? parseInt(mobileQuantity.value) : 1;
-      setQuantity(initialValue);
-  }
-  setupQuantityControls();
+        input.addEventListener('blur', () => {
+            setQuantity(parseInt(input.value));
+        });
+
+        input.addEventListener('wheel', (e) => e.preventDefault());
+    }
+
+    if (desktopQuantity) attachInputEvents(desktopQuantity);
+    if (mobileQuantity) attachInputEvents(mobileQuantity);
+
+    // Initial sync
+    const initialValue = getCurrentValue();
+    setQuantity(initialValue);
+}
+
+setupQuantityControls();
+
 
   // Image Scroller
   function setupImageScroller() {
