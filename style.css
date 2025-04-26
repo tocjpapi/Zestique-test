@@ -1678,6 +1678,15 @@ input.number::-webkit-inner-spin-button {
   justify-content: center;
 }
 
+.will-opa{
+  transition: opacity 0.7s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.will-opa:hover{
+  opacity: 0.5;
+}
+
+
 
 
 
@@ -1766,11 +1775,13 @@ input.number::-webkit-inner-spin-button {
 
 
 .sorting-stuff{
-  height: 23rem;
+  height: 18rem;
   width: calc(100vw - 12rem);
   margin-left: 6rem;
   font-size: 4.7rem;
 }
+
+
 
 
 .dropdown {
