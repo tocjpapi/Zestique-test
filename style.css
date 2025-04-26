@@ -890,26 +890,36 @@ input {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: darkred;
+    color: #000;
     text-transform: uppercase;
-    backdrop-filter: blur(10px);
-    visibility: hidden;
+    backdrop-filter: blur(20px);
+    display: none;
     transition: backdrop-filter 2.1s cubic-bezier(0.165, 0.84, 0.44, 1);
   }
 
   .catalogue-item.n-a .out-of-stock{
-    visibility: visible;
+    display: flex;
+
   }
+
+
+  .catalogue-item.n-a .out-of-stock-inner{
+    display: flex;
+    backdrop-filter: blur(10px);
+  }
+
 
   .out-of-stock-inner{
     height: 5rem;
     width: 100%;
     background: #cfcfcf44;
-    backdrop-filter: blur(5px);
-    display: flex;
+    backdrop-filter: blur(10px);
     align-items: center;
     justify-content: center;
     font-size: 1.2rem;
+    position: absolute;
+    z-index: 9;
+    display: none;
   }
   
 
@@ -1961,9 +1971,6 @@ input.number::-webkit-inner-spin-button {
   width: 100%;
   background: #cfcfcf44;
   backdrop-filter: blur(5px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
   font-size: 4.2rem;
 }
 
