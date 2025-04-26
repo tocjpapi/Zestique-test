@@ -795,7 +795,7 @@ svg path {
 }
 
 .search-bar input{
-    width: 100vw;
+    width: 90vw;
 
 }
 
@@ -1759,8 +1759,11 @@ input.number::-webkit-inner-spin-button {
 }
 
 .search-bar input{
-  width: 100vw;
+  width: 90vw;
 }
+
+
+
 
 .sorting-stuff{
   height: 18rem;
