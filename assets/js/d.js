@@ -137,7 +137,7 @@ const lenis = new Lenis({
     inertiaScroll();
   }
   
-  document.querySelectorAll(".location-mini2").forEach(button => {
+  document.querySelectorAll(".location-minis").forEach(button => {
     button.addEventListener("click", (e) => {
       e.preventDefault();
       lenis.scrollTo(600);
@@ -804,3 +804,252 @@ if (elements && elements.length > 0) {
     }
   });
 }
+
+
+// ==================== Country & Product Manager ====================
+
+const allowedCountries = ["Nigeria", "Britain", "Americas", "Canada"];
+
+function normalize(str) {
+  return str?.trim()?.toLowerCase();
+}
+
+// Global state
+let selectedCountry = null;
+let featuredProducts = [];
+
+// DOM elements
+const changeElements = document.querySelectorAll('.change-it');
+const select = document.getElementById('hiddenCountrySelect');
+const mainClothes = document.getElementById('main-clothes');
+const mobileClothes = document.getElementById('mobile-clothes');
+
+// Populate only the hidden country select
+if (select) {
+  allowedCountries.forEach(country => {
+    const option = document.createElement('option');
+    option.value = country;
+    option.textContent = country;
+    select.appendChild(option);
+  });
+  select.style.opacity = '0';
+  select.style.pointerEvents = 'auto';
+}
+
+// Show initial loading text
+changeElements.forEach(el => el.textContent = "Loading...");
+if (mainClothes) mainClothes.innerHTML = "Loading products...";
+if (mobileClothes) mobileClothes.innerHTML = "";
+
+// Function: Render products based on selectedCountry
+function renderProducts() {
+  if (!featuredProducts.length || !selectedCountry) return;
+
+  const html = featuredProducts.map(item => {
+    const price = item.prices[selectedCountry] || item.prices["Nigeria"] || "Price N/A";
+    return `
+      <div class="s-c">
+        <div class="c-i">
+          ${item.url ? `<a href="${item.url}" class="seo-anchor">Visit Page</a>` : ''}
+          <img draggable="false" src="${item.img}" alt="${item.name}">
+        </div>
+        <div class="d-c">
+          <div class="item-name"><p>${item.name}</p></div>
+          <div class="item-price"><p>${price}</p></div>
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  if (mainClothes) mainClothes.innerHTML = html;
+  if (mobileClothes) mobileClothes.innerHTML = html;
+}
+
+// Function: Update country and trigger UI updates
+function updateCountry(newCountry) {
+  selectedCountry = newCountry;
+  window.userCountry = selectedCountry;
+
+  changeElements.forEach(el => el.textContent = selectedCountry);
+  if (select) select.value = selectedCountry;
+  localStorage.setItem('selectedCountry', selectedCountry);
+
+  renderProducts();
+}
+
+// Fetch featured products
+fetch('/data/featured.json')
+  .then(res => res.json())
+  .then(data => {
+    featuredProducts = data;
+    if (selectedCountry) renderProducts();
+  })
+  .catch(err => {
+    console.error('Failed to load featured products:', err);
+    if (mainClothes) mainClothes.innerHTML = "Failed to load products.";
+  });
+
+// Determine initial country from localStorage or IP detection
+const savedCountry = localStorage.getItem('selectedCountry');
+
+if (savedCountry && allowedCountries.includes(savedCountry)) {
+  updateCountry(savedCountry);
+} else {
+  fetch('https://api.db-ip.com/v2/free/self')
+    .then(res => res.json())
+    .then(data => {
+      const detected = normalize(data.countryName || "");
+      const matched = allowedCountries.find(
+        country => normalize(country) === detected
+      );
+      updateCountry(matched || "Americas");
+    })
+    .catch(err => {
+      console.error("Location API error:", err);
+      updateCountry("Americas");
+    });
+}
+
+// Listen for manual country changes (ONLY for hiddenCountrySelect)
+if (select) {
+  select.addEventListener('change', () => {
+    updateCountry(select.value);
+  });
+}
+
+
+// catalogue specific
+
+
+function toggleVisibility(element, show) {
+  element.style.display = show ? '' : 'none';
+}
+
+function filterAndSortItems(searchValue, categoryValue, sortValue, container) {
+  const items = Array.from(container.querySelectorAll('.catalogue-item'));
+
+  const filtered = items.filter(item => {
+    const name = item.dataset.name.toLowerCase();
+    const cat = item.dataset.category.toLowerCase();
+    const searchMatch = name.includes(searchValue.toLowerCase());
+    const catMatch = categoryValue === 'all' || cat === categoryValue.toLowerCase();
+    return searchMatch && catMatch;
+  });
+
+  const sorted = filtered.sort((a, b) => {
+    const dateA = new Date(a.dataset.date);
+    const dateB = new Date(b.dataset.date);
+    return sortValue === 'newest' ? dateB - dateA : dateA - dateB;
+  });
+
+  items.forEach(item => toggleVisibility(item, false));
+  sorted.forEach(item => {
+    toggleVisibility(item, true);
+    container.appendChild(item); // Reorders DOM
+  });
+}
+
+function updateLabel(selectElement) {
+  const label = selectElement.parentElement.querySelector('.label-text');
+  if (selectElement.value === 'all' && selectElement.selectedIndex === 0) {
+    label.textContent = 'Category';
+  } else {
+    label.textContent = selectElement.options[selectElement.selectedIndex].text;
+  }
+}
+
+function addCatalogueListeners(prefix) {
+  const container = document.getElementById(prefix === '' ? 'main-cat' : 'cat-mobile');
+  const searchInput = document.getElementById(`searchInput${prefix}`);
+  const categorySelect = document.getElementById(`categories${prefix}`);
+  const sortSelect = document.getElementById(`sorting${prefix}`);
+
+  const runFilter = () => {
+    if (categorySelect) updateLabel(categorySelect);
+    filterAndSortItems(
+      searchInput?.value || '',
+      categorySelect?.value || 'all',
+      sortSelect?.value || 'newest',
+      container
+    );
+  };
+
+  if (searchInput) searchInput.addEventListener('input', runFilter);
+  if (categorySelect) {
+    categorySelect.addEventListener('change', runFilter);
+    updateLabel(categorySelect);
+  }
+  if (sortSelect) sortSelect.addEventListener('change', runFilter);
+
+  runFilter();
+}
+
+function updateAllLabels() {
+  document.querySelectorAll('select').forEach(select => {
+    const label = select.previousElementSibling?.querySelector('.label-text');
+    if (label) {
+      const selectedOption = select.options[select.selectedIndex].text;
+      label.textContent = selectedOption;
+    }
+
+    select.addEventListener('change', () => {
+      if (label) {
+        label.textContent = select.options[select.selectedIndex].text;
+      }
+    });
+  });
+}
+
+function loadCatalogueProducts() {
+  fetch('/data/products.json')
+    .then(res => res.json())
+    .then(products => {
+      const mainClothes = document.getElementById('main-cat');
+      const mobileClothes = document.getElementById('cat-mobile');
+      const currentCountry = window.userCountry || localStorage.getItem('selectedCountry') || "Nigeria";
+
+      const html = products.map(product => {
+        const {
+          id,
+          name,
+          category,
+          date,
+          img,
+          url,
+          inStock,
+          prices = {}
+        } = product;
+
+        const price = prices[currentCountry] || prices["Nigeria"] || "Price N/A";
+
+        return `
+          <div class="catalogue-item${inStock ? '' : ' n-a'}" data-id="${id}" data-name="${name}" data-category="${category}" data-date="${date}">
+            <div class="c-i">
+              ${inStock && url ? `<a href="${url}" class="seo-anchor">Visit Page</a>` : ''}
+              <img src="${img}" alt="${name}" />
+              <div class="out-of-stock"></div>
+              <div class="out-of-stock-inner"><p>OUT OF STOCK</p></div>
+            </div>
+            <div class="d-c">
+              <div class="item-name"><p>${name}</p></div>
+              <div class="item-price"><p>${price}</p></div>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      if (mainClothes) mainClothes.innerHTML = html;
+      if (mobileClothes) mobileClothes.innerHTML = html;
+
+      // Add listeners after loading content
+      addCatalogueListeners('');
+      addCatalogueListeners('Mobile');
+    })
+    .catch(err => console.error('Failed to load products:', err));
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  updateAllLabels();
+  loadCatalogueProducts();
+});
+// ==================== End of Country & Product Manager ====================

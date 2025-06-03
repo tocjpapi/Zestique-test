@@ -9,6 +9,7 @@
   display: none;
 }
 
+
 .seo-anchor {
   position: absolute;
   top: 0;
@@ -125,7 +126,7 @@ html.lenis, html.lenis body {
 }
 
   .tint{
-    opacity: 0.05;
+    opacity: 0.07;
     background: #514e00;
     height: 100vh;
     width: 100vw;
@@ -267,6 +268,17 @@ body {
     gap: 0.9rem;
 }
 
+
+.copy-bottom{
+    position: absolute;
+    bottom: 4rem;
+    right: 4rem;
+    z-index: 9;
+    display: flex;
+    gap: 0.9rem;
+}
+
+
 .copy-bottom p{
   cursor: pointer;
 }
@@ -324,6 +336,8 @@ body {
   position: absolute;
   top: 18rem;
   font-size: 1.9rem;
+  text-transform: uppercase;
+  overflow: hidden;
 }
 
 .last-things-mobile{
@@ -1296,7 +1310,7 @@ input.number::-webkit-inner-spin-button {
   justify-content: center;
   background: var(--bg);
   z-index: 99;
-
+  display: none;
 }
 
 .centre-lodr {
@@ -1688,6 +1702,23 @@ input.number::-webkit-inner-spin-button {
 
 
 
+.la-prix{
+  font-family: 'serif';
+}
+
+.location{
+  position: absolute;
+  bottom: 4rem;
+  right: 4rem;
+  color: var(--text);
+  background: var(--bg);
+  z-index: 9;
+  overflow: hidden;
+}
+
+
+
+
 
 
 @media (hover:hover){
@@ -1711,6 +1742,19 @@ input.number::-webkit-inner-spin-button {
      display: block;
  
    }
+
+.location-mobile{
+  position: absolute;
+  top: 35rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 1.9rem;
+  text-transform: uppercase;
+  overflow: hidden;
+  z-index: 99;
+}
+
+
 
 
 .show-clothes{
@@ -1991,4 +2035,3 @@ input.number::-webkit-inner-spin-button {
 
 
 }
-

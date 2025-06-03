@@ -13,6 +13,10 @@
     
 <main>
 
+    <!-- <a href="/data/featured.json"></a> -->
+
+
+
     <div class="desktop">
     <div class="loadertxt">
         <div class="centre-lodr">
@@ -64,7 +68,7 @@
                     <p>Est. 2024</p>
                 </div>
 
-                <div class="location-mini2 will-opa">
+                <div class="location-mini2 location-minis will-opa">
                     <p>Scroll</p>
                 </div>
             </div>
@@ -113,59 +117,7 @@
     
 
     <div class="colorize">
-        <div class="show-clothes fade-in" id="main-clothes">
-            <div class="s-c">
-                <div class="c-i">
-                    <a  href="/Novachrone Tee/" class="seo-anchor">Visit Page</a>
-                    <img draggable="false" src="assets/images/clothes/Novachrone Tee/1.png" alt="" srcset="">
-                </div>
-                <div class="d-c">
-                    <div class="item-name">
-                        <p>Novachrone Tee</p>
-                    </div>
-
-                    <div class="item-price">
-                        <p>NGN 25,000</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="s-c">
-
-                <div class="c-i">
-                    <a  href="/Surge Double Sleeves/" class="seo-anchor">Visit Page</a>
-                    <img draggable="false" src="assets/images/clothes/surge double sleeves/1.png" alt="" srcset="">
-                </div>
-                <div class="d-c">
-                    <div class="item-name">
-                        <p>Surge Double Sleeve</p>
-                    </div>
-
-                    <div class="item-price">
-                        <p>NGN 25,000</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="s-c">
-                <div class="c-i">
-                    <img draggable="false" src="assets/images/clothes/Renegade jeans/1.png" alt="" srcset="">
-                    <a  href="/Renegade Jeans/" class="seo-anchor">Visit Page</a>
-                </div>
-                <div class="d-c">
-                    <div class="item-name">
-                        <p>Renegade Jeans</p>
-                    </div>
-
-                    <div class="item-price">
-                        <p>NGN 27,000</p>
-                    </div>
-                </div>
-            </div>
-
-
-
-            
+        <div class="show-clothes fade-in" id="main-clothes">        
         </div>
     </div>
 
@@ -228,7 +180,7 @@
                     <p>MORE DROPS LOADING<span id="dots"></span></p>
                 </div>
 
-                <div class="location-mini2">
+                <div class="location-mini2" style="cursor: default;">
                     <p>end</p>
                 </div>
             </div>
@@ -275,6 +227,18 @@
 
 
         </div>
+
+<div class="location">
+  <p>⌖ <span class="change-it">Detecting...</span></p>
+  <select id="hiddenCountrySelect" style="position: absolute; top: 0; left: 0; width: 50vw; height: 100vh; opacity: 0; z-index: 9999;">
+    <!-- Populated dynamically -->
+  </select>
+</div>
+
+
+
+
+
     </div>
 
 </div>
@@ -369,16 +333,23 @@
         <div class="stay-right-mobile" style="left: 6rem;">
             <a href="/Cart/">See Your Cart</a>
         </div>
+
     </div>
 
     <div class="image-mobile">
             <div class="box-mobile">
+
+    <div class="location-mobile">
+
+        </div>
             <div class="box-top-mobile">
                 <p><span style="font-family: 'serif';   font-size: 18rem;">f</span>ooter</p>
             </div>
 
             <div class="more-drops-mobile">
-                <p>CONTACT<span id="dots"></span></p>
+            <p>⌖ <span class="change-it">Detecting...</span></p>
+  <select id="hiddenCountrySelect" style="position: absolute; top: 0; left: 0; width: 50vw; height: 40rem; opacity: 0; z-index: 9999;">
+  </select>
             </div>
 
             <div class="social-stuff-mobile">
@@ -403,16 +374,13 @@
     <script src="assets/js/ScrollTrigger.js"></script>
     <script src="assets/js/d.js"></script>
 
-    <script>
-        const mainClothes = document.getElementById('main-clothes');
-        const mobileClothes = document.getElementById('mobile-clothes');
-    
-        // Clone and insert into the mobile section
-        if (mainClothes && mobileClothes) {
-            mobileClothes.innerHTML = mainClothes.innerHTML;
-        }
-    </script>
-      
+
+
+
+
+
+
+
 
 
 
