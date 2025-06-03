@@ -1060,3 +1060,16 @@ document.addEventListener('DOMContentLoaded', () => {
   loadCatalogueProducts();
 });
 // ==================== End of Country & Product Manager ====================
+
+
+const sourceContainer = document.querySelector('#price-word');
+const targetContainer = document.querySelector('#la-prix');
+
+if (sourceContainer && targetContainer) {
+  const source = sourceContainer.querySelector('p');
+  const target = targetContainer.querySelector('p');
+
+  if (source && target) {
+    target.textContent = source.textContent;
+  }
+}
