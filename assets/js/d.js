@@ -716,84 +716,8 @@ setupQuantityControls();
   }
   syncMobileTitle();
 
-  // Cart Functionality
-  function setupCart() {
-      function updateCartCount() {
-          const cart = JSON.parse(localStorage.getItem('cart') || '[]');
-          const count = cart.reduce((total, item) => total + (item.quantity || 0), 0);
-          
-          document.querySelectorAll('#in-cart, #in-cart-mobile').forEach(el => {
-              if (el) el.textContent = count;
-          });
-      }
 
-      function addToCart() {
-          document.querySelectorAll('#add-to-cart').forEach(button => {
-              button.addEventListener('click', () => {
-                  let cart = JSON.parse(localStorage.getItem('cart') || '[]');
 
-                  const productName = document.getElementById('name-of-selected-product')?.textContent?.trim();
-                  const priceElement = document.querySelector('#price-word p');
-                  const productPrice = priceElement?.textContent?.trim().replace('NGN ', '').replace(/,/g, '');
-                  const productImage = document.querySelector('.product-pic img')?.src;
-
-                  if (!productName || !productPrice || !productImage) {
-                      console.error('Missing product information');
-                      return;
-                  }
-
-                  let selectedColor = '';
-                  const activeColorBox = document.querySelector('.color-box.active');
-                  if (activeColorBox) {
-                      selectedColor = activeColorBox.closest('.color-box-wrapper')?.querySelector('.color-name')?.textContent?.trim();
-                  } else {
-                      selectedColor = document.querySelector('.dropdown-display')?.textContent?.trim();
-                  }
-
-                  let selectedSize = '';
-                  const activeSizeBox = document.querySelector('.sizes-box.active');
-                  if (activeSizeBox) {
-                      selectedSize = activeSizeBox.textContent.trim();
-                  } else {
-                      const sizeDisplays = document.querySelectorAll('.dropdown-display');
-                      selectedSize = sizeDisplays[1]?.textContent?.trim();
-                  }
-
-                  const quantityInput = document.getElementById('quantity') || document.querySelector('.styled-input');
-                  const quantity = parseInt(quantityInput?.value) || 1;
-
-                  const cartItem = {
-                      name: productName,
-                      size: selectedSize || 'One Size',
-                      color: selectedColor || 'Default',
-                      quantity: quantity,
-                      price: productPrice,
-                      image: productImage
-                  };
-
-                  const existingItemIndex = cart.findIndex(item =>
-                      item.name === cartItem.name &&
-                      item.size === cartItem.size &&
-                      item.color === cartItem.color
-                  );
-
-                  if (existingItemIndex >= 0) {
-                      cart[existingItemIndex] = cartItem;
-                  } else {
-                      cart.push(cartItem);
-                  }
-
-                  localStorage.setItem('cart', JSON.stringify(cart));
-                  updateCartCount();
-                  alert('Item added to cart!');
-              });
-          });
-      }
-
-      addToCart();
-      updateCartCount();
-  }
-  setupCart();
 });
 
 const elements = document.querySelectorAll('a, img');
@@ -1073,3 +997,375 @@ if (sourceContainer && targetContainer) {
     target.textContent = source.textContent;
   }
 }
+
+
+function loadProductPrice() {
+  fetch('/data/products.json')
+    .then(res => res.json())
+    .then(products => {
+      // Get the product name from the page
+      const productNameElement = document.getElementById('name-of-selected-product');
+      if (!productNameElement) {
+        console.error('Product name element not found');
+        return;
+      }
+      
+      const productName = productNameElement.textContent.trim();
+      
+      // Find the matching product in the JSON
+      const product = products.find(p => p.name === productName);
+      
+      if (!product) {
+        console.error('Product not found in catalogue:', productName);
+        return;
+      }
+      
+      // Get current country (same logic as catalogue)
+      const currentCountry = window.userCountry || localStorage.getItem('selectedCountry') || "Nigeria";
+      
+      // Get price for current country or fallback to Nigeria
+      const price = product.prices[currentCountry] || product.prices["Nigeria"] || "Price N/A";
+      
+      // Update price on desktop
+      const desktopPriceElement = document.getElementById('price-word');
+      if (desktopPriceElement) {
+        const priceP = desktopPriceElement.querySelector('p');
+        if (priceP) {
+          priceP.textContent = price;
+        }
+      }
+      
+
+      
+      // Update the la-prix element on mobile as well
+      const laPrixElement = document.querySelector('#la-prix p');
+      if (laPrixElement) {
+        laPrixElement.textContent = price;
+      }
+      
+      console.log('Price updated successfully:', price);
+    })
+    .catch(err => {
+      console.error('Failed to load product price:', err);
+    });
+}
+
+// Load price when DOM is ready
+document.addEventListener('DOMContentLoaded', () => {
+  loadProductPrice();
+});
+
+// Also load price when country changes (if you have country switching functionality)
+window.addEventListener('countryChanged', () => {
+  loadProductPrice();
+});
+
+
+  // Cart Functionality
+// Enhanced Cart Functionality with JSON Price Loading
+function setupCart() {
+    let productsData = [];
+    
+    // Load products data
+    async function loadProductsData() {
+        try {
+            const response = await fetch('/data/products.json');
+            productsData = await response.json();
+            return productsData;
+        } catch (error) {
+            console.error('Failed to load products data:', error);
+            return [];
+        }
+    }
+
+    // Get current country and currency
+    function getCurrentCountryAndCurrency() {
+        const currentCountry = window.userCountry || localStorage.getItem('selectedCountry') || "Nigeria";
+        const currencyMap = {
+            "Nigeria": { symbol: "NGN", code: "NGN" },
+            "Britain": { symbol: "GBP", code: "GBP" },
+            "Americas": { symbol: "USD", code: "USD" },
+            "Canada": { symbol: "CAD", code: "CAD" }
+        };
+        return {
+            country: currentCountry,
+            currency: currencyMap[currentCountry] || currencyMap["Nigeria"]
+        };
+    }
+
+    // Get real-time price for a product
+    function getProductPrice(productName) {
+        const product = productsData.find(p => p.name === productName);
+        if (!product) {
+            console.error('Product not found in catalogue:', productName);
+            return null;
+        }
+
+        const { country } = getCurrentCountryAndCurrency();
+        const price = product.prices[country] || product.prices["Nigeria"];
+        
+        // Extract numeric value from price string (e.g., "NGN 25,000" -> 25000)
+        const numericPrice = price.replace(/[^\d]/g, '');
+        return {
+            numeric: parseInt(numericPrice),
+            formatted: price,
+            product: product
+        };
+    }
+
+    // Update cart count
+    function updateCartCount() {
+        const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+        const count = cart.reduce((total, item) => total + (item.quantity || 0), 0);
+        
+        document.querySelectorAll('#in-cart, #in-cart-mobile').forEach(el => {
+            if (el) el.textContent = count;
+        });
+    }
+
+    // Add to cart with product ID
+    function addToCart() {
+        document.querySelectorAll('#add-to-cart').forEach(button => {
+            button.addEventListener('click', async () => {
+                // Ensure products data is loaded
+                if (productsData.length === 0) {
+                    await loadProductsData();
+                }
+
+                let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+
+                const productName = document.getElementById('name-of-selected-product')?.textContent?.trim();
+                const productImage = document.querySelector('.product-pic img')?.src;
+
+                if (!productName || !productImage) {
+                    console.error('Missing product information');
+                    return;
+                }
+
+                // Find product in data to get ID
+                const product = productsData.find(p => p.name === productName);
+                if (!product) {
+                    console.error('Product not found in catalogue');
+                    return;
+                }
+
+                let selectedColor = '';
+                const activeColorBox = document.querySelector('.color-box.active');
+                if (activeColorBox) {
+                    selectedColor = activeColorBox.closest('.color-box-wrapper')?.querySelector('.color-name')?.textContent?.trim();
+                } else {
+                    selectedColor = document.querySelector('.dropdown-display')?.textContent?.trim();
+                }
+
+                let selectedSize = '';
+                const activeSizeBox = document.querySelector('.sizes-box.active');
+                if (activeSizeBox) {
+                    selectedSize = activeSizeBox.textContent.trim();
+                } else {
+                    const sizeDisplays = document.querySelectorAll('.dropdown-display');
+                    selectedSize = sizeDisplays[1]?.textContent?.trim();
+                }
+
+                const quantityInput = document.getElementById('quantity') || document.querySelector('.styled-input');
+                const quantity = parseInt(quantityInput?.value) || 1;
+
+                // Store with product ID instead of price
+                const cartItem = {
+                    productId: product.id,
+                    name: productName,
+                    size: selectedSize || 'One Size',
+                    color: selectedColor || 'Default',
+                    quantity: quantity,
+                    image: productImage
+                };
+
+                const existingItemIndex = cart.findIndex(item =>
+                    item.productId === cartItem.productId &&
+                    item.size === cartItem.size &&
+                    item.color === cartItem.color
+                );
+
+                if (existingItemIndex >= 0) {
+                    cart[existingItemIndex] = cartItem;
+                } else {
+                    cart.push(cartItem);
+                }
+
+                localStorage.setItem('cart', JSON.stringify(cart));
+                updateCartCount();
+                alert('Item added to cart!');
+            });
+        });
+    }
+
+    // Initialize
+    loadProductsData().then(() => {
+        addToCart();
+        updateCartCount();
+    });
+}
+
+// Enhanced cart rendering with real-time pricing
+function setCart(data) {
+    localStorage.setItem('cart', JSON.stringify(data));
+}
+
+function getCart() {
+    const data = localStorage.getItem('cart');
+    return data ? JSON.parse(data) : [];
+}
+
+document.addEventListener('DOMContentLoaded', async () => {
+    let cart = getCart();
+    let productsData = [];
+
+    // Load products data
+    try {
+        const response = await fetch('/data/products.json');
+        productsData = await response.json();
+    } catch (error) {
+        console.error('Failed to load products data:', error);
+    }
+
+    // Get current country and currency info
+    function getCurrentCountryAndCurrency() {
+        const currentCountry = window.userCountry || localStorage.getItem('selectedCountry') || "Nigeria";
+        const currencyMap = {
+            "Nigeria": { symbol: "NGN", code: "NGN" },
+            "Britain": { symbol: "GBP", code: "GBP" },
+            "Americas": { symbol: "USD", code: "USD" },
+            "Canada": { symbol: "CAD", code: "CAD" }
+        };
+        return {
+            country: currentCountry,
+            currency: currencyMap[currentCountry] || currencyMap["Nigeria"]
+        };
+    }
+
+    // Get real-time price for cart item
+    function getCartItemPrice(cartItem) {
+        const product = productsData.find(p => p.id === cartItem.productId || p.name === cartItem.name);
+        if (!product) {
+            console.error('Product not found:', cartItem.name);
+            return { numeric: 0, formatted: 'N/A' };
+        }
+
+        const { country } = getCurrentCountryAndCurrency();
+        const price = product.prices[country] || product.prices["Nigeria"];
+        
+        // Extract numeric value
+        const numericPrice = price.replace(/[^\d]/g, '');
+        return {
+            numeric: parseInt(numericPrice),
+            formatted: price
+        };
+    }
+
+    function renderCartItems() {
+        const desktopContainer = document.getElementById('desktop-cart-items');
+        const mobileContainer = document.getElementById('mobile-cart-items');
+
+        if (!desktopContainer || !mobileContainer) {
+            console.warn('Cart containers not found in DOM');
+            return;
+        }
+
+        desktopContainer.innerHTML = '';
+        mobileContainer.innerHTML = '';
+
+        let itemCount = 0;
+        let totalAmount = 0;
+        const { currency } = getCurrentCountryAndCurrency();
+
+        // Update currency symbol in total
+        const currencyElements = document.querySelectorAll('#Currency');
+        currencyElements.forEach(el => {
+            if (el) el.textContent = currency.symbol;
+        });
+
+        cart.forEach((item, index) => {
+            const priceData = getCartItemPrice(item);
+            itemCount += item.quantity;
+            totalAmount += priceData.numeric * item.quantity;
+
+            const itemHTML = `
+                <div class="cart-item" data-index="${index}">
+                    <div class="about-the-cart">
+                        <div class="cart-item-img">
+                            <img src="${item.image}" alt="${item.name}">
+                        </div>
+                        <div class="cart-item-text">
+                            <div class="cart-item-name">
+                                <p>
+                                    <span class="name-of-cart-item">${item.name}</span> 
+                                    (<span class="size-of-cart-item">${item.size}</span>, 
+                                    <span class="colour-of-cart-item">${item.color}</span>)
+                                </p>
+                            </div>
+                            <div class="cart-item-quantity">
+                                <p>Quantity: <span class="quantity-of-item">${item.quantity}</span></p>
+                            </div>
+                            <button class="delete-item-btn">Remove</button>
+                        </div>
+                    </div>
+                    <div class="cart-item-price">
+                        <p>${currency.symbol} ${new Intl.NumberFormat().format(priceData.numeric)}</p>
+                    </div>
+                </div>
+            `;
+
+            desktopContainer.innerHTML += itemHTML;
+            mobileContainer.innerHTML += itemHTML;
+        });
+
+        // Update cart count
+        const inCartEl = document.getElementById('in-cart');
+        if (inCartEl) inCartEl.textContent = itemCount;
+
+        const inCartMobileEl = document.getElementById('in-cart-mobile');
+        if (inCartMobileEl) inCartMobileEl.textContent = itemCount;
+
+        // Update totals
+        const formattedTotal = new Intl.NumberFormat().format(totalAmount);
+        const totalEl = document.getElementById('total');
+        if (totalEl) totalEl.textContent = formattedTotal;
+
+        const totalMobileEl = document.getElementById('total-mobile');
+        if (totalMobileEl) totalMobileEl.textContent = formattedTotal;
+
+        // Add delete button listeners
+        document.querySelectorAll('.delete-item-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const parent = e.target.closest('.cart-item');
+                if (!parent) return;
+                const index = parseInt(parent.dataset.index);
+                cart.splice(index, 1);
+                setCart(cart);
+                renderCartItems();
+            });
+        });
+    }
+
+    // Initial render
+    renderCartItems();
+
+    // Listen for country changes and re-render cart
+    window.addEventListener('countryChanged', () => {
+        renderCartItems();
+    });
+
+    // Checkout functionality
+    document.querySelectorAll('.proceed-to-checkout-box').forEach(box => {
+        box.addEventListener('click', () => {
+            if (cart.length === 0) {
+                alert('Your cart is empty!');
+            } else {
+                alert('Proceeding to checkout!');
+                // window.location.href = 'checkout.html'; // optional redirect
+            }
+        });
+    });
+});
+
+// Initialize cart system
+setupCart();
