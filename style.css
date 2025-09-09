@@ -2036,3 +2036,10 @@ input.number::-webkit-inner-spin-button {
 
 
 }
+
+
+@media (pointer: coarse) {
+  html, body {
+    overscroll-behavior: auto;
+  }
+}
