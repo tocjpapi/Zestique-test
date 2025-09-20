@@ -303,7 +303,6 @@ body {
     height: 100vh;
     width: 100vw;
     overflow: hidden;
-    filter: grayscale();
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1599,7 +1598,6 @@ input.number::-webkit-inner-spin-button {
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  filter: grayscale();
   background: #000;
 }
 
@@ -1610,6 +1608,7 @@ input.number::-webkit-inner-spin-button {
   opacity: 0.7;
   will-change: transform;
   position: absolute;
+  filter: grayscale();
 }
 
 .image-mobile img{
@@ -1619,6 +1618,7 @@ input.number::-webkit-inner-spin-button {
   opacity: 0.7;
   will-change: transform;
   position: absolute;
+    filter: grayscale();
 }
 
 
@@ -2063,6 +2063,15 @@ input.number::-webkit-inner-spin-button {
 }
 
 
+.bg{
+      animation: bg-animation .2s infinite;
+}
+
+
+.c-i img{
+
+  filter: grayscale(0.3);
+}
 
 
 }
