@@ -1734,6 +1734,10 @@ input.number::-webkit-inner-spin-button {
       font-size: 5.7rem;
     }    
 
+    .tint{
+      display: none;
+    }
+
 
 
     .desktop {
