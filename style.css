@@ -128,8 +128,8 @@ html.lenis, html.lenis body {
   .tint{
     opacity: 0.07;
     background: #514e00;
-    height: 100vh;
-    width: 100vw;
+    height: 100%;
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
