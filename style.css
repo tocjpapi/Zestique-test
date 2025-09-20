@@ -128,8 +128,8 @@ html.lenis, html.lenis body {
   .tint{
     opacity: 0.07;
     background: #514e00;
-    height: 100%;
-    width: 100%;
+    height: 100vh;
+    width: 100vw;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -158,8 +158,8 @@ html {
     margin: 0;
     padding: 0;
     font-family: 'sans-serif';
+    background-color: var(--bg);
     color: var(--text);
-    background-color: #d6d5d2;
     font-size: calc(100vw / 1512 * 10);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
