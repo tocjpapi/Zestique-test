@@ -1354,17 +1354,17 @@ document.addEventListener('DOMContentLoaded', async () => {
         renderCartItems();
     });
 
-    // Checkout functionality
-    document.querySelectorAll('.proceed-to-checkout-box').forEach(box => {
-        box.addEventListener('click', () => {
-            if (cart.length === 0) {
-                alert('Your cart is empty!');
-            } else {
-                alert('Proceeding to checkout!');
-                // window.location.href = 'checkout.html'; // optional redirect
-            }
-        });
-    });
+    // // Checkout functionality
+    // document.querySelectorAll('.proceed-to-checkout-box').forEach(box => {
+    //     box.addEventListener('click', () => {
+    //         if (cart.length === 0) {
+    //             alert('Your cart is empty!');
+    //         } else {
+    //             alert('Proceeding to checkout!');
+    //             // window.location.href = 'checkout.html'; // optional redirect
+    //         }
+    //     });
+    // });
 });
 
 // Initialize cart system

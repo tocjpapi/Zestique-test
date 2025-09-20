@@ -158,7 +158,6 @@ html {
     margin: 0;
     padding: 0;
     font-family: 'sans-serif';
-    background-color: var(--bg);
     color: var(--text);
     font-size: calc(100vw / 1512 * 10);
     -webkit-font-smoothing: antialiased;
@@ -1311,7 +1310,7 @@ input.number::-webkit-inner-spin-button {
   justify-content: center;
   background: var(--bg);
   z-index: 99;
-  display: none;
+
 }
 
 .centre-lodr {
