@@ -1456,12 +1456,12 @@ input.number::-webkit-inner-spin-button {
 }
 
 
-/* mobile styles */
 
-/* .mobile{
+
+ .mobile{
   animation: fade-In 0.7s ease forwards;
   opacity: 0;
-} */
+} 
 
 .desktop{
   animation: fade-In 0.7s ease forwards;
