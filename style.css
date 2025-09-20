@@ -1,6 +1,6 @@
 :root{
-    --bg: #e0e0e0;
-    --text: #000;
+    --bg: #d6d5d2;
+    --text: #050401;
     --light-text: #f5f5f5;
     --default-text: 1.7rem;
 }
@@ -123,6 +123,7 @@ html.lenis, html.lenis body {
   object-fit: cover;
   opacity: 0.7;
   will-change: transform;
+  filter: grayscale();
 }
 
   .tint{
@@ -137,6 +138,22 @@ html.lenis, html.lenis body {
     pointer-events: none;
     top: 0;
     z-index: 999999999999;
+          display: none;
+  }
+
+
+    .tint2{
+    opacity: 0.07;
+    background: #514e00;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    pointer-events: none;
+    top: 0;
+    z-index: 2;
   }
             
   
@@ -209,7 +226,6 @@ body {
     height: 110vh;
     width: 100vw;
     overflow: hidden;
-    filter: grayscale();
     background: #000;
     display: flex;
     align-items: center;
@@ -694,9 +710,8 @@ svg path {
     justify-content: center;
     background: #cfcfcf;
     overflow: hidden;
-    filter: grayscale();
+
     position: relative;
-    transition: filter 1.7s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 
 .c-i img{
@@ -704,9 +719,11 @@ svg path {
   scale: 0.85;
   transition: opacity 0.3s ease;
   opacity: 1;
+  filter: grayscale();
+      transition: filter 1.7s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 
-.c-i:hover{
+.c-i:hover img{
     filter: grayscale(0.3);
 }
 
@@ -743,7 +760,6 @@ svg path {
     margin-left: 4rem;
     overflow: hidden;
     position: relative;
-    filter: grayscale();
     background: #1b1b1b;
     display: flex;
     align-items: center;
@@ -755,6 +771,7 @@ svg path {
     position: absolute;
     top: -28%;
     opacity: 0.7;
+    filter: grayscale();
 }
 
 /* catalogue */
@@ -800,8 +817,8 @@ svg path {
     margin-left: 4rem;
     display: flex;
     align-items: center;
-    border-top: 0.1rem dashed #333;
-    border-bottom: 0.1rem dashed #333;
+    border-top: 0.1rem dashed #363531;
+    border-bottom: 0.1rem dashed #363531;
 }
 
 .search-bar {
@@ -962,8 +979,8 @@ input {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border-top: 0.1rem dashed #333;
-    border-bottom: 0.1rem dashed #333;
+    border-top: 0.1rem dashed #363531;
+    border-bottom: 0.1rem dashed #363531;
   }
 
 
@@ -1026,7 +1043,7 @@ input {
     color: var(--text);
     cursor: pointer;
     transition: background 0.7s ease;
-    border: 0.1rem dashed #333;
+    border: 0.1rem dashed #363531;
     border-bottom: none;
   }
 
@@ -1058,7 +1075,6 @@ input {
   width: 67.8rem;
   margin-left: 4rem;
   position: relative;
-  filter: grayscale(30%);
 }
 
 .product-pics img{
@@ -1088,6 +1104,10 @@ input {
   justify-content: center;
   background: #cfcfcf;
   overflow: hidden;
+  position: relative;
+}
+
+.product-pic img{
   filter: grayscale();
   transition: filter 2.1s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
@@ -1096,7 +1116,7 @@ input {
   filter: grayscale(0.3);
 }
 
-.product-pic:hover{
+.product-pic:hover img{
   filter: grayscale(0);
 }
 
@@ -1194,12 +1214,12 @@ input {
 }
 
 .color-box.active{
-  border: 0.1rem dashed #333;
+  border: 0.1rem dashed #363531;
 }
 
 .sizes-box.active{
-  background: #cfcfcf;
-  border: 0.1rem dashed #333;
+  background: #c7c6c1;
+  border: 0.1rem dashed #363531;
 }
 
 .color-box-inner{
@@ -1217,7 +1237,7 @@ input {
   font-size: 1.3rem;
 
   cursor: pointer;
-  background: #f5f5f5;
+  background: #ebeae6;
 }
 
 
@@ -1270,7 +1290,7 @@ input.number::-webkit-inner-spin-button {
 
 
 .number{
-  border-bottom: 1px dashed #333;
+  border-bottom: 0.1rem dashed #363531;
   width: 3rem;
   text-align: center;
 }
@@ -1292,7 +1312,7 @@ input.number::-webkit-inner-spin-button {
   bottom: 0;
   width: 100%;
   height: 1px;
-  background: #333;
+  background: #363531;
   transition: width 0.7s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 
@@ -1311,7 +1331,7 @@ input.number::-webkit-inner-spin-button {
   justify-content: center;
   background: var(--bg);
   z-index: 99;
-
+  display: none;
 }
 
 .centre-lodr {
@@ -1439,10 +1459,10 @@ input.number::-webkit-inner-spin-button {
 
 /* mobile styles */
 
-.mobile{
+/* .mobile{
   animation: fade-In 0.7s ease forwards;
   opacity: 0;
-}
+} */
 
 .desktop{
   animation: fade-In 0.7s ease forwards;
@@ -1478,9 +1498,12 @@ input.number::-webkit-inner-spin-button {
   z-index: 9;
   display: flex;
   gap: 2.2rem;
-  --bg: rgba(224, 224, 224, 0.5);
-  backdrop-filter: blur(5px);
+  width: fit-content;
+  height: fit-content;
+  mix-blend-mode: difference;
+  color: var(--bg);
 }
+
 
 .this-mobile{
   display: flex;
@@ -1492,7 +1515,7 @@ input.number::-webkit-inner-spin-button {
 
 .this-control-mobile {
   width: fit-content;
-  border-bottom: 0.1rem dashed #333;
+  border-bottom: 0.1rem dashed #363531;
   font-size: 4.5rem;
   padding-left: 1.5rem;
   padding-right: 1.5rem;
@@ -1613,7 +1636,7 @@ input.number::-webkit-inner-spin-button {
 }
 
 .stay-right-mobile a{
-  border-bottom: 0.1rem dashed #333;
+  border-bottom: 0.1rem dashed #363531;
 }
 
 .title-mobile{
@@ -1683,7 +1706,7 @@ input.number::-webkit-inner-spin-button {
   margin-top: 0.8rem;
   background: #cfcfcf;
   color: var(--text);
-  border: 0.1rem dashed #333;
+  border: 0.1rem dashed #363531;
   padding: 5px 10px;
   cursor: pointer;
   font-size: 0.85rem;
@@ -1732,11 +1755,12 @@ input.number::-webkit-inner-spin-button {
 
     body {
       font-size: 5.7rem;
-    }    
+    }   
 
-    .tint{
-      display: none;
-    }
+
+    
+
+
 
 
 
@@ -1992,7 +2016,7 @@ input.number::-webkit-inner-spin-button {
   position: absolute;
   right: 0;
   bottom: 12rem;
-  border-bottom: 0.1rem dashed #333;
+  border-bottom: 0.1rem dashed #363531;
 }
 
 
@@ -2018,9 +2042,9 @@ input.number::-webkit-inner-spin-button {
 
 .delete-item-btn {
   margin-top: 4.1rem;
-  background: #cfcfcf;
+  background: #c7c6c1;
   color: var(--text);
-  border: 0.1rem dashed #333;
+  border: 0.1rem dashed #363531;
   padding: 5px 10px;
   cursor: pointer;
   font-size: 2.25rem;
@@ -2033,10 +2057,12 @@ input.number::-webkit-inner-spin-button {
 .out-of-stock-inner{
   height: 20rem;
   width: 100%;
-  background: #cfcfcf44;
+  background: #c7c6c144;
   backdrop-filter: blur(5px);
   font-size: 4.2rem;
 }
+
+
 
 
 }

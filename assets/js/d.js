@@ -775,6 +775,7 @@ function renderProducts() {
     return `
       <div class="s-c">
         <div class="c-i">
+                      <div class="tint2"></div>
           ${item.url ? `<a href="${item.url}" class="seo-anchor">Visit Page</a>` : ''}
           <img draggable="false" src="${item.img}" alt="${item.name}">
         </div>
@@ -956,6 +957,7 @@ function loadCatalogueProducts() {
         return `
           <div class="catalogue-item${inStock ? '' : ' n-a'}" data-id="${id}" data-name="${name}" data-category="${category}" data-date="${date}">
             <div class="c-i">
+                <div class="tint2"></div>
               ${inStock && url ? `<a href="${url}" class="seo-anchor">Visit Page</a>` : ''}
               <img src="${img}" alt="${name}" />
               <div class="out-of-stock"></div>
