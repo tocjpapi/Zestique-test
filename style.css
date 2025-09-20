@@ -1456,7 +1456,7 @@ input.number::-webkit-inner-spin-button {
 }
 
 
-
+/* mobile styles */
 
  .mobile{
   animation: fade-In 0.7s ease forwards;
