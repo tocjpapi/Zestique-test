@@ -1038,7 +1038,7 @@ input {
     justify-content: center;
     height: 8rem;
     width: 25rem;
-    background: #cfcfcf;
+    background: #c7c6c1;
     color: var(--text);
     cursor: pointer;
     transition: background 0.7s ease;
